@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POO con clases ES6</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    ((c) => {
+        // Mixins
+        const definirRed = Superclass => class extends Superclass{
+            definirRed(){
+                
+            }
+        }
+
+        // A travez de un objeto tipo WeakMap se puede crear Privacidad en las propiedades de un objeto
+        let privateVar = new WeakMap()
+        c(`Clase Telefono`)
+        class Telefono {
+            constructor(marca, modelo, numero) {
+                this.marca = marca,
+                this.modelo = modelo,
+                // this._numero = numero
+                // De esta manera se puede crear PRIVACIDAD en las variables:
+                privateVar.set(this , {
+                    _numero : numero,
+                    _imei : '192.123.434'
+                })
+            }
+            // set y get permiten exponer publicamente los valores PRIVADOS
+            set numero(numero){
+                privateVar.get(this)._numero = numero
+            }
+            get numero(){
+                c( privateVar.get(this)._numero )
+            }
+            llamar() {
+                c(`Tu telefono ${privateVar.get(this)._numero} con IP ${privateVar.get(this)._imei} está Timbrando... Timbrando... Timbrando...`)
+            }
+        }
+
+        const tel = new Telefono('Panasocic', 'Axt300', '45364789')
+        tel.llamar()
+        tel.numero
+        tel.numero = '12345678'
+        tel.numero
+
+        // Herencia: La clase Celular va a heredar el comportamniento de teléfono, también va a heredar sus metodos
+        c('\n Clase Celular que hereda de Telefono')
+        class Celular extends Telefono {
+            // La palabra SUPER llama al constructor del padre, y tambien llama a sus métodos.
+            constructor(marca, modelo, numero) {
+                super(marca, modelo, numero)
+            }
+            vibrar() {
+                c(`Tu telefono ${privateVar.get(this)._numero} con IP ${privateVar.get(this)._imei}  está Vibrando... Vibrando... Vibrando...`);
+            }
+        }
+        let cel = new Celular('Nokia', '1100', '7788454634')
+        c(cel)
+        // EL metodo vibrar solo le pertenece a la clase Celular
+        cel.vibrar()
+        // Los demás métodos se heredaron de la clase Telefono
+        cel.llamar()
+        cel.numero
+        cel.numero = '12345678'
+        cel.numero
+
+        const privado = new WeakMap()
+        class pueblo{
+            constructor(habitantes , comercio){
+                // this.habitantes = habitantes,
+                // this.comercio = comercio,
+                privado.set(this , {
+                    _habitantes : habitantes,
+                    _comercio : comercio
+                })
+            }
+        }
+
+
+    })(console.log)
+
+
+</script>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POO con Prototype</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+((c)=>{
+    // Solo se inicializan los atributos dol objeto
+    function carrito(articulo) {
+        this._articulo = articulo,
+        this._carrito = {}
+    }
+    // Prototipe evita que generar metodos repetidamente cada vez que se instancia un objeto
+    carrito.prototype = {
+        agregar: function (articulo , cantidad)  {
+            this._carrito[articulo] = cantidad
+        },
+        quitar: function (articulo)  {
+            delete this._carrito[articulo]
+        },
+        ver: function ()  {
+            return this._carrito
+        }
+    }
+    const televisores = new carrito('televisores')
+
+    televisores.agregar('LG' , 4)
+    televisores.agregar('Panasonic', 5)
+    c( televisores.ver() )
+    televisores.quitar('LG')
+    c( televisores.ver() )
+
+
+})(console.log)
+</script>
+</html>

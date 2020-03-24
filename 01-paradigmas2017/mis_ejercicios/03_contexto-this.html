@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contexto de This</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+((c)=>{
+
+
+    class celulares{
+        constructor(marca, precio , audifonos = false){
+            this.marca = marca
+            this.precio = precio
+            this.audifonos = audifonos ? 'con' : 'sin'
+            this.versiones = [
+                {id:1 , ano: 2018},
+                {id:2 , ano: 2019},
+                {id:3 , ano: 2012},
+                {id:4 , ano: 2017},
+            ]
+        }
+        comprar = function () {
+            c(`Haz comprado un ${this.marca}, costó ${this.precio} y viene ${this.audifonos} audifonos incluidos.`)
+        }
+        // Con function Tradicional no funcionará
+        // El scope de this no existe dentro de una function tradicional
+        verInfoOld = function () {
+            this.versiones.forEach( function (el) {
+                c(`${el.id} ---- ${el.ano} ---- ${this.marca}`)
+            } )
+        }
+        // Con Arrow function SI que funcionará
+        // El scope de this se mantiene en la creacion de la clase con Arrow Function
+        verInfoArrow = function () {
+            this.versiones.forEach( (el) => {
+                c(`${el.id} ---- ${el.ano} ---- ${this.marca}`)
+            } )
+        }
+    }
+
+    const huawei = new celulares('Huawei' , "1'.500.000" , true)
+
+    huawei.comprar()
+    huawei.verInfoArrow()
+
+    function carrito(articulo) {
+        this._articulo = articulo,
+        this._carrito = {}
+    }
+    // Prototipe evita que se creen los metodos cada vez que se insytancia un objeto
+    carrito.prototype = {
+        agregar: function (articulo , cantidad)  {
+            this._carrito[articulo] = cantidad
+        },
+        quitar: function (articulo)  {
+            delete this._carrito[articulo]
+        },
+        ver: function ()  {
+            return this._carrito
+        }
+    }
+    const televisores = new carrito('televisores')
+
+    televisores.agregar('LG' , 4)
+    televisores.agregar('Panasonic', 5)
+    c( televisores.ver() )
+    televisores.quitar('LG')
+    c( televisores.ver() )
+
+    function isPalindrome(word) {
+        // Please write your code here.
+        let wordOriginal = word
+        word = word.split('')
+        let palindrome = word.reverse().join('')
+        return( palindrome === wordOriginal ? true : false )
+    }
+
+    
+    c(isPalindrome('vacas'))
+
+
+})(console.log)
+</script>
+</html>

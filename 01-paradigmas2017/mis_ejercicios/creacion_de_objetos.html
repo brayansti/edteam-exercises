@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pruebas</title>
+</head>
+<body>
+</body>
+
+<script>
+
+( function(){
+
+    // ### OBJETO LITERAL ###
+    // ### OBJETO LITERAL ###
+    const perro = {
+        nombre : 'Keny',
+        esterilizado : false,
+        comer : function(comida = 'frango'){
+            console.log(`${this.nombre} come ${comida}`)
+        }
+    }
+    console.log(perro);
+    perro.comer('carne');
+
+    // ### OBJETO CON EL PROTOTIPO OBJECT ###
+    // ### OBJETO CON EL PROTOTIPO OBJECT ###
+    const gato = new Object();
+    gato.nombre = 'Petunia'
+    gato.esterilizado = false
+    gato.comer = function(comida = 'atun'){
+        console.log(`${this.nombre} come ${comida}`)
+    }
+    console.log(gato);
+    gato.comer('carne');
+
+    // ### OBJETO CON FUNCION CONSTUCTORA ###
+    // ### OBJETO CON FUNCION CONSTUCTORA ###
+    const animal = function (nombre, esterilizado){
+        this.nombre = nombre
+        this.esterilizado = esterilizado
+        // Acá si se pueden usar arrow function por que el contexto lo da la funcion constuctora (animal)
+        this.comer = ( comida = 'galletas' ) =>{
+            console.log(`${this.nombre} come ${comida}`)
+        }
+    }
+    const loro = new animal('Roberto el loro' , false);
+    console.log(loro);
+    loro.comer('Cacao')
+
+    // ### 😀 OBJETO CLASES ES6 😀 ###
+    // ### 😀 OBJETO CLASES ES6 😀 ###
+
+    class otroAnimal {
+        constructor (nombre, esterilizado){
+            this.nombre = nombre
+            this.esterilizado = esterilizado
+        }
+        comer = ( comida = 'frutas' ) =>{
+            console.log(`${this.nombre} come ${comida}`)
+        }
+    }
+
+    const tortuga = new otroAnimal('Lola la tortuga' , false);
+    console.log(tortuga);
+    tortuga.comer()
+
+} )()
+
+</script>
+</html>

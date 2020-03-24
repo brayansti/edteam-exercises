@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POO con clases ES6</title>
+</head>
+
+<body>
+    <button id="clickMe">ClickMe</button>
+</body>
+
+<script>
+    ((c) => {
+        // Se instancia um ojeto de la siguiente forma:
+        const ajax = new XMLHttpRequest();
+
+        // Ajax maneja 4 métodos:
+        // ajax.open() → → Abre la petición
+        // ajax.addEventListener() → → Se asignar un evento
+        // ajax.setRequestHeader() → → Se establecen cabezeras (opcional)
+        // ajax.send() → → Se envia la peticíon
+
+        document.getElementById('clickMe').addEventListener('click' , (e)=>{
+            ajax.open('GET' , 'https://reqres.in/api/users?page=1', true)
+            // ↑↑↑ open() Tres parametros: ↑↑↑
+            // 1- get/post
+            // 2- url/href de lo que se va a consultar
+            // 3- Indica si la peticion es asincrona (generalmente va en true)
+
+            ajax.addEventListener('readystatechange' , userInfo() )
+            // ↑↑↑ XMLHttpRequest tiene varios eventos, "readystatechange" (cuando un cambio ocurre) 
+
+            ajax.setRequestHeader('Content-Type' , 'application/x-www-form-urlencoded')
+            // ↑↑↑ Define las cabezeras que se va a enviar: setRequestHeader(cabezera , valor)
+            
+            ajax.send()
+            // ↑↑↑ Envia la peticion
+        })
+
+        function userInfo(){
+            if(ajax.readyState === 4 & ajax.status === 200){
+                console.log(ajax.response)
+            }
+            else if(ajax.status == 404){
+                console.log('No encontrado')
+            }
+        }
+
+    })(console.log)
+
+
+</script>
+
+</html>
