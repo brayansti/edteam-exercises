@@ -12,12 +12,20 @@
 
 <script>
 ((c)=>{
-    // Solo se inicializan los atributos dol objeto
+    // Solo se inicializan los atributos del objeto
     function carrito(articulo) {
         this._articulo = articulo,
         this._carrito = {}
+        // Se pueden agregar metodos de ↓↓↓↓↓↓ esta manera ↓↓↓↓↓↓ pero NO es obtimo en memoria, es mejor usar PROTOTYPE
+
+                // this.agregar = function(articulo , cantidad){
+                //     this._carrito[articulo] = cantidad
+                // }
+
+        // Se pueden agregar metodos de ↑↑↑↑↑↑ esta manera ↑↑↑↑↑↑ pero NO es obtimo en memoria, es mejor usar PROTOTYPE
     }
-    // Prototipe evita que generar metodos repetidamente cada vez que se instancia un objeto
+
+    // Prototipe evita tener que generar metodos repetidamente cada vez que se instancia un objeto
     carrito.prototype = {
         agregar: function (articulo , cantidad)  {
             this._carrito[articulo] = cantidad
