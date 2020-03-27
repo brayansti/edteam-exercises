@@ -51,47 +51,25 @@
     // END EJEMPLO
 
     // Ejemplo metodos metodos autoretornados para poder 👉 concatenar metodos 👈
-    function Animal(tipo){
-        let caminar = function(){
-            console.log(`${tipo} está caminando.`)
-            return this
-        }
-        let ladrar = function(){
-            console.log(`${tipo} ladrando`)
-            return this
-        }
-        let morder = function(){
-            console.log(`${tipo} mordiendo`)
-            return this
-        }
-        return{
-            caminar: caminar,
-            ladrar: ladrar,
-            morder: morder,
-        }
-    }
-    let perro = new Animal('perro')
-    // 👇 Concatenando metodos 👇
-    perro.morder().ladrar().caminar()
-
-
-    // 
-    // 
-    // 
-    // 
     c('///////////////////////////////////////')
     
     function Poquemon(name){
-        let caminar = function(){
+        function caminar(){
             console.log(`${name} está caminando.`)
             return this
         }
-        let ladrar = function(){
+        function ladrar(){
             console.log(`${name} ladrando`)
             return this
         }
-        let morder = function(){
+        function morder(){
             console.log(`${name} mordiendo`)
+            return this
+        }
+
+        // 👉👉 'this' dentro de Arrow funtion hace referencia a la clase (Poquemon), mas no a su instancia.
+        let arrowMet = () => {
+            console.log(`${name} arrowMet`)
             return this
         }
         
@@ -99,13 +77,20 @@
             caminar: caminar,
             ladrar: ladrar,
             morder: morder,
+            arrowMet: arrowMet,
         }
     }
     let pica = new Poquemon('picachu')
-    pica.morder().ladrar().caminar()
+    // 👇 Concatenando metodos 👇
+    pica.morder().ladrar().caminar().morder()
+
+    // 👉👉 'this' de una arrow funtion hace referencia a la clase (Poquemon) por eso no se puede rerornar, y lo siguente da error:
+    // pica.morder().ladrar().arrowMet().caminar()
 
 
 })(console.log)
+
+
 
 </script>
 </html>
