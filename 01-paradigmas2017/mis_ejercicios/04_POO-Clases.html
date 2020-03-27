@@ -89,6 +89,16 @@
 
     })(console.log)
 
+    function reverseNumber(n) {
+        // ...
+        // let reverse = (num) => Math.abs(num).toString(10).split('').reverse().join('')
+        // return parseInt( n >= 0 ? reverse(n) : '-'+reverse(n) )
+        return parseInt(Math.abs(n).toString(10).split('').reverse().join('')) * (n >= 0 ? 1 : -1)
+    }
+
+    
+    console.log(reverseNumber(-123))
+    console.log(reverseNumber(456))
 
 </script>
 
