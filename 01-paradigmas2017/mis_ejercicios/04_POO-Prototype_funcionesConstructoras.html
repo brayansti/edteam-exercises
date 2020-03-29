@@ -12,6 +12,8 @@
 
 <script>
 ((c)=>{
+    c('///////////////////////////////////////')
+
     // Solo se inicializan los atributos del objeto
     function carrito(articulo) {
         this._articulo = articulo,
@@ -50,42 +52,68 @@
     // END EJEMPLO
     // END EJEMPLO
 
-    // Ejemplo metodos metodos autoretornados para poder 👉 concatenar metodos 👈
-    c('///////////////////////////////////////')
-    
-    function Poquemon(name){
-        function caminar(){
-            console.log(`${name} está caminando.`)
-            return this
-        }
-        function ladrar(){
-            console.log(`${name} ladrando`)
-            return this
-        }
-        function morder(){
-            console.log(`${name} mordiendo`)
-            return this
-        }
+    c(` ----- Herencia con prototype -----`)
 
-        // 👉👉 'this' dentro de Arrow funtion hace referencia a la clase (Poquemon), mas no a su instancia.
-        let arrowMet = () => {
-            console.log(`${name} arrowMet`)
-            return this
-        }
-        
-        return{
-            caminar: caminar,
-            ladrar: ladrar,
-            morder: morder,
-            arrowMet: arrowMet,
-        }
+    // Clase animal
+    // Clase animal
+    function animal (type){
+        this.type = type
+        this.move = true
     }
-    let pica = new Poquemon('picachu')
-    // 👇 Concatenando metodos 👇
-    pica.morder().ladrar().caminar().morder()
+    animal.prototype.mover = function(){
+        c(`${this.type} moviendose`)
+    }
+    // END Clase animal
+    // END Clase animal
 
-    // 👉👉 'this' de una arrow funtion hace referencia a la clase (Poquemon) por eso no se puede rerornar, y lo siguente da error:
-    // pica.morder().ladrar().arrowMet().caminar()
+
+    // Clase Carnivoro
+    // Clase Carnivoro
+    function Carnivoro (type, food){
+        // 👇 Así se llama al constructor del padre 👇
+        animal.call(this , type)
+        this.food = food
+    }
+    // 👇 Así hereda las propiedades de otra clase 👇
+    Carnivoro.prototype = new animal()
+    // 👇 Así se agregan nuevas propiedades / metodos 👇
+    Carnivoro.prototype.comer = function(){
+        c(`El ${this.type} come ${this.food}`)
+    }
+    // END Clase Carnivoro
+    // END Clase Carnivoro
+
+
+    // Clase Cazador
+    // Clase Cazador
+    function Cazador (type , food , manada){
+        // 👇 Así se llama al constructor del padre 👇
+        Carnivoro.call(this , type , food)
+        this.manada = manada || false
+    }
+    // 👇 Así hereda las propiedades de otra clase 👇
+    Cazador.prototype = new Carnivoro()
+    // 👇 Así se agregan nuevas propiedades / metodos 👇
+    Cazador.prototype.cazar = function(){
+        c(`El ${this.type} come ${this.food} y caza ${this.manada ? 'en manada' : 'solo'}`)
+    }
+    // END Clase Cazador
+    // END Clase Cazador
+
+    c(`👇👇👇👇👇 Lombriz es clase Animal 👇👇👇👇👇`)
+    let lombriz = new animal('Lombriz')
+    lombriz.mover()
+
+    c(`👇👇👇👇👇 Buitre es un Carnivoro que hereda de Animal 👇👇👇👇👇`)
+    let buitre = new Carnivoro('buitre' , 'cebra')
+    buitre.mover()
+    buitre.comer()
+
+    c(`👇👇👇👇👇 Buitre es un Cazador que hereda de Animal y también de Carnivoro 👇👇👇👇👇`)
+    let lobo = new Cazador('Lobo' , 'bisontes' , true)
+    lobo.mover()
+    lobo.comer()
+    lobo.cazar()
 
 
 })(console.log)

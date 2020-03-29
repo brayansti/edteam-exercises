@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POO con Prototype</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+((c)=>{
+
+    // Cualquier funcion se puede usar como funcion constructora
+
+    // Este ejemplo es un fa funcion constructora con "modulo revelado" que permite 👉 encadenar metodos 👈
+    c('///////////////////////////////////////')
+    
+    function Poquemon(name){
+        function caminar(){
+            console.log(`${name} está caminando.`)
+            return this
+        }
+        function ladrar(){
+            console.log(`${name} ladrando`)
+            return this
+        }
+        function morder(){
+            console.log(`${name} mordiendo`)
+            return this
+        }
+
+        // 👉👉 'this' dentro de Arrow funtion hace referencia a la clase (Poquemon), mas no a su instancia.
+        let arrowMet = () => {
+            console.log(`${name} arrowMet`)
+            return this
+        }
+        
+        return{
+            caminar: caminar,
+            ladrar: ladrar,
+            morder: morder,
+            arrowMet: arrowMet,
+        }
+    }
+    let pica = new Poquemon('picachu')
+    // 👇 Encadenacion de metodos 👇
+    pica.morder().ladrar().caminar().morder()
+
+    // 👉👉 'this' de una arrow funtion hace referencia a la clase (Poquemon) por eso no se puede rerornar, y lo siguente da error:
+    // pica.morder().ladrar().arrowMet().caminar()
+
+
+})(console.log)
+
+
+
+</script>
+</html>
