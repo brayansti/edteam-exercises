@@ -81,8 +81,8 @@
     // 👇 Así hereda las propiedades de otra clase 👇
     Carnivoro.prototype = new animal()
     // 👇 Así se agregan nuevas propiedades / metodos 👇
-    Carnivoro.prototype.comer = function(){
-        c(`El ${this.type} come ${this.food}`)
+    Carnivoro.prototype.comer = function(comida){
+        c(`El ${this.type} come ${comida ? comida : this.food}`)
     }
     // END Clase Carnivoro
     // END Clase Carnivoro
@@ -112,11 +112,13 @@
     let buitre = new Carnivoro('buitre' , 'cebra')
     buitre.mover()
     buitre.comer()
+    buitre.comer('cadáveres')
 
-    c(`👇👇👇👇👇 Buitre es un Cazador que hereda de Animal y también de Carnivoro 👇👇👇👇👇`)
+    c(`👇👇👇👇👇 Lobo es un Cazador que hereda de Animal y también de Carnivoro 👇👇👇👇👇`)
     let lobo = new Cazador('Lobo' , 'bisontes' , true)
     lobo.mover()
     lobo.comer()
+    buitre.comer('ovejas')
     lobo.cazar()
 
 
