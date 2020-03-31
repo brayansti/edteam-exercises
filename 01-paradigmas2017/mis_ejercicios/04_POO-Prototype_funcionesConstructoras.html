@@ -12,45 +12,6 @@
 
 <script>
 ((c)=>{
-    c('///////////////////////////////////////')
-
-    // Solo se inicializan los atributos del objeto
-    function carrito(articulo) {
-        this._articulo = articulo,
-        this._carrito = {}
-        // Se pueden agregar metodos de ↓↓↓↓↓↓ esta manera ↓↓↓↓↓↓ pero NO es obtimo en memoria, es mejor usar PROTOTYPE
-
-                // this.agregar = function(articulo , cantidad){
-                //     this._carrito[articulo] = cantidad
-                // }
-
-        // Se pueden agregar metodos de ↑↑↑↑↑↑ esta manera ↑↑↑↑↑↑ pero NO es obtimo en memoria, es mejor usar PROTOTYPE
-    }
-
-    // Prototipe evita tener que generar metodos repetidamente cada vez que se instancia un objeto
-    carrito.prototype = {
-        agregar: function (articulo , cantidad)  {
-            this._carrito[articulo] = cantidad
-        },
-        quitar: function (articulo)  {
-            delete this._carrito[articulo]
-        },
-        ver: function ()  {
-            return this._carrito
-        }
-    }
-    const televisores = new carrito('televisores')
-
-    televisores.agregar('LG' , 4)
-    televisores.agregar('Panasonic', 5)
-    c( televisores.ver() )
-    televisores.quitar('LG')
-    c( televisores.ver() )
-
-    // END EJEMPLO
-    // END EJEMPLO
-    // END EJEMPLO
-    // END EJEMPLO
 
     c(`\b`)
     c(` 👇 -------------------- Herencia con prototype -------------------- 👇`)
@@ -125,6 +86,88 @@
 })(console.log)
 
 
+;
+(c=>{
+    c(`\b`)
+    c(` 👇 -------------------- Herencia con prototype y Modulo revelado -------------------- 👇`)
+    c(` 👇 -------------------- Herencia con prototype y Modulo revelado -------------------- 👇`)
+    c(` 👇 -------------------- Herencia con prototype y Modulo revelado -------------------- 👇`)
+    c(`\b`)
+    // Clase Usuario
+    // Clase Usuario
+    function Usuario (userName , mail){
+        this.userName = userName
+        this.mail = mail
+        this.userLog = false
+        // Expongo los metodos que agregué con prototype
+        return{
+            userName: this.userName,
+            logIn : this.logIn,
+            logOut : this.logOut,
+            userLog : this.userLog,
+        }
+    }
+    Usuario.prototype.logIn = function(){
+        this.userLog = true
+    }
+    Usuario.prototype.logOut = function(){
+        this.userLog = false
+    }
+    // END Clase Usuario
+    // END Clase Usuario
+
+    // Clase Editor
+    // Clase Editor
+    function Editor (userName , mail){
+        // 👇 Esta será una variable privada 👇
+        this.posts = []
+        // 👇 Así se llama al constructor del padre 👇
+        Usuario.call(this, userName , mail)
+        // Expongo los metodos que agregué con prototype
+
+        return{
+            userName: this.userName,
+            logIn : this.logIn,
+            logOut : this.logOut,
+            userLog : this.userLog,
+            posts : this.posts,
+
+            seePosts: this.seePosts,
+            addPost: this.addPost,
+        }
+    }
+    Editor.prototype = new Usuario()
+    Editor.prototype.addPost = function(postTitle , postContent){
+        let new_date = new Date()
+        this.posts.push({
+            postDate : `${new_date.getDate()} / ${new_date.getMonth()} / ${new_date.getYear()}`,
+            postTitle : postTitle,
+            postContent : postContent
+        })
+    }
+    Editor.prototype.seePosts = function(){
+        return this.posts
+    }
+    // END Clase Editor
+    // END Clase Editor
+
+    c(`👇👇👇👇👇 Juana es un usuario que hereda de Usuario 👇👇👇👇👇`)
+    let juana = new Usuario('Juana' , 'Juanita@gmail.com')
+    c('juana.userName = ' + juana.userName)
+    c('juana.userLog = ' + juana.userLog)
+    juana.logIn()
+    c('juana.userLog = ' + juana.userLog)
+
+    c(`👇👇👇👇👇 Bob es un Editor que hereda de Usuario 👇👇👇👇👇`)
+    let editBob = new Editor('Bob' , 'bob@gmail.com')
+    editBob.logIn('Bob')
+    c(editBob.userName)
+    editBob.addPost('Title1' , 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.')
+    editBob.addPost('Title2' , 'Consectetur adipisicing elit Lorem ipsum dolor sit, amet.')
+    c(editBob.seePosts())
+    
+})(console.log)
+// TEST
 
 </script>
 </html>

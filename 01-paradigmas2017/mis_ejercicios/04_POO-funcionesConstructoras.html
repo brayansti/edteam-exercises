@@ -19,6 +19,7 @@
     c('///////////////////////////////////////')
     
     function Poquemon(name){
+        this.name = name;
         function caminar(){
             console.log(`${name} está caminando.`)
             return this
@@ -46,6 +47,7 @@
         }
     }
     let pica = new Poquemon('picachu')
+    c(pica.name)
     // 👇 Encadenacion de metodos 👇
     pica.morder().ladrar().caminar().morder()
 
