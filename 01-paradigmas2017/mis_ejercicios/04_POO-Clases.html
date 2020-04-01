@@ -26,6 +26,12 @@
             }
         }
 
+        c(
+            `%c \n ES6 CLASS: Palabras reservadas: [constructor , extends , super, static] 👈👈👈`,
+            'font-weight: bold; font-size:12px; text-align: center;'
+        )
+
+
         // A travez de un objeto tipo WeakMap se puede crear Privacidad en las propiedades de un objeto
         let privateUser = new WeakMap()
 
@@ -40,8 +46,14 @@
                     _pass : pass
                 })
             }
-            access(user, pass){
+            access(){
                 this.logStatus = !this.logStatus
+            }
+            userInfo(){
+                return{
+                    name : this.name,
+                    user : this.user
+                }
             }
             // 👇👇👇 Metodos static: se pueden acceder sin crear una istancia
             static info(){
@@ -64,8 +76,7 @@
         c(`👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇`)
         c(`👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇`)
         c(`👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇`)
-        c(`Herencia: Palabras reservadas: [constructor , extends , super] 👈👈👈`)
-        
+
         // Herencia: La clase Celular va a heredar el comportamniento de teléfono, también va a heredar sus metodos
         c(`\n 👇👇👇  Clase Editor hereda de User 👇👇👇`)
         // Una nueva instancia de WeakMap para definir nuevos valores privados a esta clase,
@@ -80,7 +91,12 @@
                     _posts: []
                 })
             }
+            // `👇👇👇 POLIMORFISMO 👇👇👇 POLIMORFISMO 👇👇👇 POLIMORFISMO 👇👇👇`
+            // POLIMORFISMO: Cambiar el comportamineto de un metodo heredado: 'access' es diferente en User
+            // POLIMORFISMO: Cambiar el comportamineto de un metodo heredado: 'access' es diferente en User
             access(user, pass){
+                // `👇👇👇 SUPER LLAMADO: Se puede llamar a un metodo de la clase padre con a palabra super`
+                c(`Este es un ejemplo de SUPER LLAMADO: NAME: ${super.userInfo().name} USER: ${super.userInfo().user}` )
                 this.logStatus
                     ? this.logStatus = false
                     : (user === this.user && pass === privateUser.get(this)._pass ? this.logStatus = true : alert('Datos invalidos'))
