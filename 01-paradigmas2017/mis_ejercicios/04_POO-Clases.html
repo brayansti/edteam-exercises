@@ -13,6 +13,11 @@
 </body>
 
 <script>
+    (c=>{
+        
+        
+    })(console.log);
+
     ((c) => {
         // Mixins
         const definirRed = Superclass => class extends Superclass{
@@ -22,70 +27,81 @@
         }
 
         // A travez de un objeto tipo WeakMap se puede crear Privacidad en las propiedades de un objeto
-        let privateVar = new WeakMap()
-        c(`Clase Telefono`)
-        class Telefono {
-            constructor(marca, modelo, numero) {
-                this.marca = marca,
-                this.modelo = modelo,
-                // this._numero = numero
-                // De esta manera se puede crear PRIVACIDAD en las variables:
-                privateVar.set(this , {
-                    _numero : numero,
-                    _imei : '192.123.434'
+        let privateUser = new WeakMap()
+
+        c(`\n 👇👇👇 Clase User 👇👇👇`)
+        class User{
+            constructor(name, user, pass){
+                this.name = name
+                this.user = user
+                this.logStatus = false
+                // 👇👇👇 De esta manera se crea una variable PRIVADA 👇👇👇
+                privateUser.set(this , {
+                    _pass : pass
                 })
             }
-            // set y get permiten exponer publicamente los valores PRIVADOS
-            set numero(numero){
-                privateVar.get(this)._numero = numero
-            }
-            get numero(){
-                c( privateVar.get(this)._numero )
-            }
-            llamar() {
-                c(`Tu telefono ${privateVar.get(this)._numero} con IP ${privateVar.get(this)._imei} está Timbrando... Timbrando... Timbrando...`)
+            access(user, pass){
+                this.logStatus = !this.logStatus
             }
         }
 
-        const tel = new Telefono('Panasocic', 'Axt300', '45364789')
-        tel.llamar()
-        tel.numero
-        tel.numero = '12345678'
-        tel.numero
+        c(`👇👇👇 TEST Instancia de Brayan 👇👇👇`)
+        let brayan = new User('Brayan Camargo' , 'bcamargo' , '123456')
+        c( `brayan.name: ${brayan.name} <-----> brayan.user: ${brayan.user} ` )
+        c(brayan.logStatus)
+        brayan.access('bcamargo' , '123456')
+        c(brayan.logStatus)
 
+        
+        c(`\n`)
+        c(`👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇`)
+        c(`👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇`)
+        c(`👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇 HERENCIA 👇👇👇`)
+        c(`Herencia: Palabras reservadas: [constructor , extends , super] 👈👈👈`)
+        
         // Herencia: La clase Celular va a heredar el comportamniento de teléfono, también va a heredar sus metodos
-        c('\n Clase Celular que hereda de Telefono')
-        class Celular extends Telefono {
-            // La palabra SUPER llama al constructor del padre, y tambien llama a sus métodos.
-            constructor(marca, modelo, numero) {
-                super(marca, modelo, numero)
+        c(`\n 👇👇👇  Clase Editor hereda de User 👇👇👇`)
+        // Una nueva instancia de WeakMap para definir nuevos valores privados a esta clase,
+        // la instancia anterior NO SIRVE por que la está usando el constructor padre
+        let privateEditor = new WeakMap()
+        class Editor extends User{
+            constructor(name, user, pass){
+                // La palabra SUPER llama al constructor del padre, y tambien llama a sus métodos.
+                super(name, user, pass)
+                // 👇👇👇 De esta manera se puede crear PRIVACIDAD en las variables 👇👇👇
+                privateEditor.set(this , {
+                    _posts: []
+                })
             }
-            vibrar() {
-                c(`Tu telefono ${privateVar.get(this)._numero} con IP ${privateVar.get(this)._imei}  está Vibrando... Vibrando... Vibrando...`);
+            access(user, pass){
+                this.logStatus
+                    ? this.logStatus = false
+                    : (user === this.user && pass === privateUser.get(this)._pass ? this.logStatus = true : alert('Datos invalidos'))
             }
-        }
-        let cel = new Celular('Nokia', '1100', '7788454634')
-        c(cel)
-        // EL metodo vibrar solo le pertenece a la clase Celular
-        cel.vibrar()
-        // Los demás métodos se heredaron de la clase Telefono
-        cel.llamar()
-        cel.numero
-        cel.numero = '12345678'
-        cel.numero
-
-        const privado = new WeakMap()
-        class pueblo{
-            constructor(habitantes , comercio){
-                // this.habitantes = habitantes,
-                // this.comercio = comercio,
-                privado.set(this , {
-                    _habitantes : habitantes,
-                    _comercio : comercio
+            // 👉👉 Los metodos set y get permiten exponer/acceder/modifcar los valores PRIVADOS
+            // 👇👇👇 GET y SET pueden tener el mismo nombre sin problemas
+            get posts (){
+                return privateEditor.get(this)._posts
+            }
+            // 👇👇👇 SET solo admite un parametro, por utilizé un array
+            set posts(post){
+                privateEditor.get(this)._posts.push({
+                    title: post[0],
+                    content: post[1],
                 })
             }
         }
 
+        c(`👇👇👇 TEST Instancia de messi 👇👇👇`)
+        let messi = new Editor('messi' , 'messi10' , '123456')
+        c(messi.logStatus)
+        messi.access('messi10' , '123456')
+        c(messi.logStatus)
+        c(messi.posts)
+        messi.posts = ['Title' , 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, porro officia repellendus, dicta incidunt dolore natus amet ab hic magnam quasi aut cum magni facilis minima sit quos? Dolores, earum!']
+        messi.posts = ['Title2' , 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, porro officia repellendus, dicta incidunt dolore natus amet ab hic magnam quasi aut cum magni facilis minima sit quos? Dolores, earum!']
+        messi.posts = ['Title3' , 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, porro officia repellendus, dicta incidunt dolore natus amet ab hic magnam quasi aut cum magni facilis minima sit quos? Dolores, earum!']
+        c(messi.posts)
 
     })(console.log)
 
