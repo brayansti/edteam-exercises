@@ -43,9 +43,16 @@
             access(user, pass){
                 this.logStatus = !this.logStatus
             }
+            // 👇👇👇 Metodos static: se pueden acceder sin crear una istancia
+            static info(){
+                console.log(`Test metodo STATIC, esta clase se llama: ${this.name}`)
+            }
         }
 
-        c(`👇👇👇 TEST Instancia de Brayan 👇👇👇`)
+        c(`\n 👇👇👇 TEST metodos static: se pueden acceder sin crear una istancia`)
+        User.info()
+
+        c(`\n 👇👇👇 TEST Instancia de Brayan 👇👇👇`)
         let brayan = new User('Brayan Camargo' , 'bcamargo' , '123456')
         c( `brayan.name: ${brayan.name} <-----> brayan.user: ${brayan.user} ` )
         c(brayan.logStatus)
@@ -92,7 +99,10 @@
             }
         }
 
-        c(`👇👇👇 TEST Instancia de messi 👇👇👇`)
+        c(`\n 👇👇👇 TEST metodos static: se pueden acceder sin crear una istancia`)
+        Editor.info()
+
+        c(`\n 👇👇👇 TEST Instancia de messi 👇👇👇`)
         let messi = new Editor('messi' , 'messi10' , '123456')
         c(messi.logStatus)
         messi.access('messi10' , '123456')
