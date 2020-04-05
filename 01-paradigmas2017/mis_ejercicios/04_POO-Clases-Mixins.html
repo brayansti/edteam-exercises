@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POO con clases ES6</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    (c=>{
+        
+        
+    })(console.log);
+
+    ((c) => {
+
+        c(
+            `%c \n ES6 CLASS - MIXINGS: Se comportan como clases abstractas 👈👈👈`,
+            'font-weight: bold; font-size:12px; text-align: center;'
+        )
+        c(
+            `%c 👉👉👉 Se pueden heredar pero no instanciar 👈👈👈 \n`,
+            'font-size:12px; text-align: center; font-weight: bold;'
+        )
+        
+        // // Declaracion de Mixins
+        const MixAcciones = Superclass => class extends Superclass{
+            leer(name){
+                console.log(`El usuario ${name} esta leyendo`)
+            }
+            comer(name){
+                console.log(`El usuario ${name} esta comiendo`)
+            }
+        }
+        
+        const MixAccionesExtremas = Superclass => class extends Superclass{
+            saltar(name){
+                console.log(`El usuario ${name} esta saltando`)
+            }
+            pelear(name){
+                console.log(`El usuario ${name} esta saltando`)
+            }
+        }
+
+        c(`\n 👇👇👇 Clase User 👇👇👇`)
+        class User {
+            constructor(name, user, pass){
+                this.name = name
+                this.user = user
+                this.logStatus = false
+            }
+        }
+        const peter = new User('Peter' , 'peter123' , '123321')
+        c(peter)
+
+        // Herencia: La clase Celular va a heredar el comportamniento de teléfono, también va a heredar sus metodos
+        c(`\n 👇👇👇  Clase Editor hereda de User 👇👇👇`)
+        class Editor extends MixAccionesExtremas ( MixAcciones( User ) ){
+            constructor(name, user, pass){
+                // La palabra SUPER llama al constructor del padre, y tambien llama a sus métodos.
+                super(name, user, pass)
+            }
+        }
+
+        let editante = new Editor('Pepe' , 'Pepe123' , '1223456')
+        c(editante)
+        editante.leer(editante.name)
+        editante.saltar(editante.name)
+
+    })(console.log)
+
+</script>
+
+</html>
